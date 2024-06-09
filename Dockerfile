@@ -1,20 +1,8 @@
-# Gebruik een officiële Node.js runtime als basisimage
-FROM node:14
+# syntax=docker/dockerfile:1
 
-# Stel de werkdirectory in
+FROM node:18-alpine
 WORKDIR /app
-
-# Kopieer package.json en package-lock.json
-COPY package*.json ./
-
-# Installeer dependencies
-RUN npm install
-
-# Kopieer de rest van de applicatiecode
 COPY . .
-
-# Exposeer de poort waarop de app draait
+RUN yarn install --production
+CMD ["node", "src/index.js"]
 EXPOSE 3000
-
-# Start de applicatie
-CMD ["npm", "start"]
